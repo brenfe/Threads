@@ -1,11 +1,13 @@
-FROM mcr.microsoft.com/dotnet/core/sdk:3.1-buster
+FROM mcr.microsoft.com/dotnet/sdk:5.0
 WORKDIR /src
-COPY ["Threads.csproj"," "]
-RUN dotnet restore "./Threads.csproj"
+
+
+
 COPY . .
+RUN dotnet restore
 WORKDIR "/src/."
 RUN dotnet build "Thread.csproj" -c Release -o /app/build
 RUN dotnet publish "Thread.csproj" -c Release -o /app/publish
-WORKDIR /app
+WORKDIR /app/publish
 ENTRYPOINT ["dotnet", "Threads.dll"]
 
